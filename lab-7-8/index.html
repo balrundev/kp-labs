@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <script>
+            function makeCanvas(x, y) {
+                const canvas = document.createElement('canvas'), ctx = canvas.getContext('2d');
+                canvas.setAttribute('width', x);
+                canvas.setAttribute('height', y);
+                return { canvas, ctx };
+            }
+
+            const { canvas, ctx } = makeCanvas(320, 240);
+
+            document.body.appendChild(canvas);
+            
+            const boxSize = [50, 70];
+            let position = [10, 30];
+            
+            
+            function draw() {
+                ctx.beginPath();
+                ctx.moveTo(position[0], position[1]);
+                ctx.lineTo(position[0], position[1] + boxSize[1]);
+                ctx.moveTo(position[0], position[1]);
+                ctx.lineTo(position[0] + boxSize[0]/2, position[1] + boxSize[1]/2);
+                ctx.lineTo(position[0] + boxSize[0], position[1]);
+                ctx.lineTo(position[0] + boxSize[0], position[1] + boxSize[1]);
+                ctx.fillStyle = 'rgb(21, 173, 151)';
+                ctx.fillRect(position[0] + boxSize[0] * 1.1 , position[1] + boxSize[1] - 5, 5, 5);
+                let curvePos = [position[0], position[1] + boxSize[1]];
+                //ctx.closePath();
+                position = [position[0] + boxSize[0] + 10, position[1]];
+                ctx.moveTo(position[0] + boxSize[0]/2, position[1]);
+                ctx.lineTo(position[0], position[1] + boxSize[1] / 4);
+                ctx.lineTo(position[0] + boxSize[0]/2, position[1] + boxSize[1] / 2);
+                ctx.moveTo(position[0] + boxSize[0]/2, position[1]);
+                ctx.lineTo(position[0] + boxSize[0]/2, position[1] + boxSize[1]);
+                ctx.moveTo(position[0] + boxSize[0]/2, position[1] + boxSize[1] / 2);
+                ctx.lineTo(position[0] + boxSize[0], position[1] + boxSize[1] / 4);
+                ctx.lineTo(position[0] + boxSize[0]/2, position[1]);
+                ctx.fillStyle = 'rgb(21, 173, 151)';
+                ctx.fillRect(position[0] + boxSize[0], position[1] + boxSize[1] - 5, 5, 5);
+                ctx.strokeStyle = 'rgb(21, 173, 151)';
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(curvePos[0], curvePos[1] * 1.1);
+                ctx.bezierCurveTo(curvePos[0], curvePos[1] * 1.2,
+                                  position[0] + boxSize[0] * 0.5, curvePos[1] * 1.5,
+                                  position[0]+boxSize[0], position[1]+boxSize[1] * 1.1);
+                ctx.strokeStyle = 'rgb(27, 72, 272)';
+                ctx.stroke();
+            }
+            
+            ctx.font = '18px sans-serif';
+            ctx.fillText('Image:', 10, 20);
+            draw();
+
+            ctx.transform(0, -0.5, 0.5, 0, 0, 0);
+            position = [-400, 10];
+            draw();
+            
+        </script>
+    </body>
+</html>
